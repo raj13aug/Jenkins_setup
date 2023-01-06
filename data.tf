@@ -1,9 +1,9 @@
-data "aws_ami" "ubuntu" {
+data "aws_ami" "redhat" {
   most_recent = true
 
   filter {
-    name   = "name"
-    values = ["ubuntu-focal-20.04-amd64-server-*"]
+    name = "name"
+    ami  = ["ami-08e637cea2f053dfa"]
   }
 
 }

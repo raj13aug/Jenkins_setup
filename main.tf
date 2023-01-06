@@ -35,7 +35,7 @@ module "key_pair" {
 
 # resource block
 resource "aws_instance" "jenkins" {
-  ami             = data.aws_ami.ubuntu.id
+  ami             = data.aws_ami.redhat.id
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.web_traffic.name]
   key_name        = "deployer-three"
