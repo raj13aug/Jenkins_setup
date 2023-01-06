@@ -43,7 +43,7 @@ resource "aws_instance" "jenkins" {
 }
 
 resource "null_resource" "configure_nfs" {
-  depends_on = [aws_efs_mount_target.efs-mt]
+  depends_on = [aws_instance.jenkins]
   connection {
     type        = "ssh"
     user        = "ec2-user"
