@@ -63,9 +63,12 @@ resource "null_resource" "install_jenkins" {
       "sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo",
       "sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key",
       "sudo yum upgrade -y",
+      "sleep 10",
       "sudo yum install jenkins -y",
       "sleep 10",
       "sudo systemctl restart jenkins",
+      "sleep 10",
+      "sudo cat /var/lib/jenkins/secrets/initialAdminPassword"
     ]
   }
 }
