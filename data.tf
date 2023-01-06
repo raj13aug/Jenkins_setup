@@ -21,3 +21,8 @@ data "aws_ami" "redhat" {
     values = ["hvm"]
   }
 }
+
+data "aws_route53_zone" "selected" {
+  name         = "robofarming.link"
+  private_zone = false
+}
