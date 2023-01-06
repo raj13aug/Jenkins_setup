@@ -44,6 +44,16 @@ resource "aws_instance" "jenkins" {
     Name = "Jenkins-server"
   }
 }
+
+# Domain block 
+resource "aws_route53_record" "domainName" {
+  zone_id = data.aws_route53_zone.selected.zone_id
+  name    = var.domainName
+  type    = "A"
+  ttl     = 300
+  records = [aws_instance.jenkins.public_ip]
+}
+
 # null resource 
 resource "null_resource" "os_update" {
   depends_on = [aws_instance.jenkins]
@@ -89,12 +99,4 @@ resource "null_resource" "install_jenkins" {
       "sudo cat /var/lib/jenkins/secrets/initialAdminPassword"
     ]
   }
-}
-
-resource "aws_route53_record" "domainName" {
-  zone_id = data.aws_route53_zone.selected.zone_id
-  name    = var.domainName
-  type    = "A"
-  ttl     = 300
-  records = [aws_instance.jenkins.public_ip]
 }
