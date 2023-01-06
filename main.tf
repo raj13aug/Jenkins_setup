@@ -33,7 +33,7 @@ resource "aws_security_group" "web_traffic" {
 module "key_pair" {
   source     = "terraform-aws-modules/key-pair/aws"
   key_name   = "jenkins"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC0TLsSPoiOSnac9MqVcaYh+NlJ0cqS4AKlNA9dh5CliG/jyaH1zUH6y4lWlqPBRBQ610UpKMST48cbbRVHYlZ7Suf415/Jp1zjM7NUS7H4USdbLI0qFL7OTHUSyyQBYG565EFsTMdUknVikQM6T2B1Dbs46JoRubfNlKg94YQljNl7inBFiks+/DKxXpcq/p1znvUz/cdWP5C77tXx8RB0vpFLDTSw0jRc/legZ/VdcqSpZJFOION5F+7HkiM5YT3QYFdNuA9khCL+Iqwd2LgcHWF12nFn+TQXvt9yl4VyXeLqc9GQeknGartTRcGc+gyW+3iDNjhdTcjHmBJwlMMSIAbEKW3QT1n3PkiCgH37/Df3GVtGCPVKmo1jnyFHkotSjqnz6ixw7H1IXyOYq2ED9BtLScyc8Za0j+p+D5M5qTGeWaBoiwg1gnXr6QuTzegi/ei2GYSrnNe0vmBEtMj+ctViXvV3TBn783lg+nNafOx00/T1snSH5Q2BvUESDB0= root@ip-172-31-85-18"
+  public_key = file(var.public_key)
 }
 
 # resource block
