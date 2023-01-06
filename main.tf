@@ -27,7 +27,7 @@ resource "aws_security_group" "web_traffic" {
     "Terraform" = "true"
   }
 }
-
+# key pair create
 module "key_pair" {
   source     = "terraform-aws-modules/key-pair/aws"
   key_name   = "jenkins"
@@ -40,10 +40,12 @@ resource "aws_instance" "jenkins" {
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.web_traffic.name]
   key_name        = "jenkins"
-
+  tags = {
+    Name = "Jenkins-server"
+  }
 }
-
-resource "null_resource" "configure_nfs" {
+# null resource 
+resource "null_resource" "install_jenkins" {
   depends_on = [aws_instance.jenkins]
   connection {
     type        = "ssh"
