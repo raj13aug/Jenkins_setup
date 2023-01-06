@@ -45,7 +45,7 @@ resource "aws_instance" "jenkins" {
   }
 }
 # null resource 
-resource "null_resource" "install_jenkins" {
+resource "null_resource" "os_update" {
   depends_on = [aws_instance.jenkins]
   connection {
     type        = "ssh"
@@ -58,12 +58,39 @@ resource "null_resource" "install_jenkins" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo yum install -y jenkins java-11-openjdk-devel",
+      "sudo yum install -y java-11-openjdk-devel",
       "sudo yum -y install wget",
       "sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo",
       "sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key",
       "sudo yum upgrade -y",
-      "sleep 10",
+      "sleep 10"
+    ]
+  }
+}
+
+resource "aws_instance" "jenkins" {
+  ami             = data.aws_ami.redhat.id
+  instance_type   = "t2.micro"
+  security_groups = [aws_security_group.web_traffic.name]
+  key_name        = "jenkins"
+  tags = {
+    Name = "Jenkins-server"
+  }
+}
+# null resource 
+resource "null_resource" "install_jenkins" {
+  depends_on = [aws_instance.jenkins, null_resource.os_update]
+  connection {
+    type        = "ssh"
+    user        = "ec2-user"
+    private_key = file(var.private_key)
+    host        = aws_instance.jenkins.public_ip
+    timeout     = "20s"
+  }
+
+  # https://kodekloud.com/community/t/while-installing-jenkins-on-vm-getting-below-error/86030/8
+  provisioner "remote-exec" {
+    inline = [
       "sudo yum install jenkins -y",
       "sleep 10",
       "sudo systemctl restart jenkins",
