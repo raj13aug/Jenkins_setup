@@ -62,7 +62,8 @@ resource "null_resource" "configure_nfs" {
       "sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key",
       "sudo yum upgrade -y",
       "sudo yum install jenkins -y",
-      "sudo systemctl start jenkins",
+      "sleep 10",
+      "sudo systemctl restart jenkins",
     ]
   }
 }
