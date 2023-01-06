@@ -67,7 +67,8 @@ resource "null_resource" "install_jenkins" {
       "sudo yum install jenkins -y",
       "sleep 10",
       "sudo systemctl restart jenkins",
-      "sleep 10"
+      "sleep 10",
+      "sudo cat /var/lib/jenkins/secrets/initialAdminPassword"
     ]
   }
 }
