@@ -52,7 +52,7 @@ resource "null_resource" "os_update" {
     user        = "ec2-user"
     private_key = file(var.private_key)
     host        = aws_instance.jenkins.public_ip
-    timeout     = "20s"
+    timeout     = "50s"
   }
 
 
