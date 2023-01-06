@@ -90,3 +90,16 @@ resource "null_resource" "install_jenkins" {
     ]
   }
 }
+
+data "aws_route53_zone" "selected" {
+  name         = "robofarming.link"
+  private_zone = false
+}
+
+resource "aws_route53_record" "domainName" {
+  zone_id = data.aws_route53_zone.selected.zone_id
+  name    = var.domainName
+  type    = "A"
+  ttl     = 300
+  records = [aws_instance.jenkins.public_ip]
+}
