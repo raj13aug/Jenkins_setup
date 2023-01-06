@@ -1,11 +1,5 @@
 data "aws_ami" "redhat" {
   most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["ami-08e637cea2f053dfa"]
-  }
 
   filter {
     name   = "architecture"
