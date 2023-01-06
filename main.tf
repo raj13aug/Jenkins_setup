@@ -27,6 +27,7 @@ resource "aws_security_group" "web_traffic" {
     "Terraform" = "true"
   }
 }
+
 # key pair create
 module "key_pair" {
   source     = "terraform-aws-modules/key-pair/aws"
